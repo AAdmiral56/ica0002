@@ -41,7 +41,7 @@
 
 - name: Add A record
   nsupdate:
-    key_algorithm: "hmac-sha256"
+    key_algorithm: "aes256"
     key_name: "dns_update"
     key_secret: "{{ ns_update_secret }}"
     server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
