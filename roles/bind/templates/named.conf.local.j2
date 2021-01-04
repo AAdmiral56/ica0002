@@ -1,6 +1,6 @@
 key "dns-update" {
         algorithm HMAC-SHA256;
-        secret {{ transfer_key_secret }};
+        secret {{ nsupdate_key_secret }};
 };
 
 key "dns-transfer" {
