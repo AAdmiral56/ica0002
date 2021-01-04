@@ -4,4 +4,4 @@
   roles:
     - bind
   vars_files:
-    - ~/.ansible/vault_password
+    - ~/.ansible/vault_pass2.yml

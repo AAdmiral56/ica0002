@@ -12,8 +12,7 @@
     - users
     - reverse_proxy
     - mysql
-  vars_files:
-    - ~/.ansible/vault_password
+    
 #- name: DNS servers
  # hosts: dns_server
   #become: yes
