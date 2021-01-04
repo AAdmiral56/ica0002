@@ -1,11 +1,11 @@
 key "dns-update" {
         algorithm HMAC-SHA256;
-        secret {{ ns_update_key_secret }};
+        secret {{ ns_update_secret }};
 };
 
 key "dns-transfer" {
         algorithm HMAC-SHA256;
-        secret {{ transfer_key_secret }};
+        secret {{ ns_transfer_secret }};
 };
 zone "{{ domain }}" {
     type master;
