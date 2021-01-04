@@ -1,9 +1,9 @@
 ---
-- name: Restart bind9
-  service:
+ - name: Restart bind9
+   service:
     name: bind9
     state: restarted
     enabled: yes
 
-- name: Rndc reload
-  shell: rndc reload
+ - name: Rndc reload
+   shell: rndc reload

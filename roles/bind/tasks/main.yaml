@@ -26,7 +26,7 @@
 
  - name: Configure master zone
    template:
-     src: db.adattiva.j2
+     src: db.cloud.j2
      dest: /var/lib/bind/db.{{ domain }}
      force: no
    notify: Rndc reload
@@ -51,23 +51,23 @@
      enabled: yes
 
 
- - name: Add A record
-   nsupdate:
-     key_algorithm: "hmac-sha256"
-     key_name: "{{ dns_update }}"
-     key_secret: "{{ ns_update_secret | string }}"
-     server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
-     zone: "{{ domain }}"
-     record: A
-     value:
-     type: "A"
-   when: inventory_hostname == groups['dns_masters'][0]
-          
+# - name: Add A record
+#   nsupdate:
+#     key_algorithm: "hmac-sha256"
+#     key_name: "{{ dns_update }}"
+#     key_secret: "{{ dns_update_key }}"
+#     server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+#     zone: "{{ domain }}"
+#     record: A
+#     value:
+#     type: "A"
+#   when: inventory_hostname == groups['dns_masters'][0]
+
  - name: Add CNAME record
    nsupdate:
      key_algorithm: "hmac-sha256"
      key_name: "{{ dns_update }}"
-     key_secret: "{{ ns_update_secret | string }}"
+     key_secret: "{{ dns_update_key }}"
      server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
      zone: "{{ domain }}"
      record: "{{ item['cname'] }}.{{ domain }}."
@@ -87,4 +87,3 @@
      name: bind9
      state: started
      enabled: yes
-
