@@ -3,3 +3,5 @@
   become: yes
   roles:
     - bind
+  vars_files:
+    - ~/.ansible/vault_password
