@@ -1,13 +1,12 @@
 key "dns-update" {
-        algorithm hmac-sha256;
-        secret '$5$qMIbgT/B/jqj$LbEwOVIjtByVDxBBtlJFEmRi3OrgSMlFa0gGPH4m0NB';
+        algorithm HMAC-SHA256;
+        secret {{ transfer_key_secret }};
 };
 
 key "dns-transfer" {
-        algorithm hmac-sha256;
-        secret '$5$qMIbgT/B/jqj$LbEwOVIjtByVDxBBtlJFEmRi3OrgSMlFa0gGPH4m0NB';
+        algorithm HMAC-SHA256;
+        secret {{ transfer_key_secret }};
 };
-
 zone "{{ domain }}" {
     type master;
     file "/var/lib/bind/db.{{ startup_name }}";

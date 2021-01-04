@@ -43,7 +43,7 @@
   nsupdate:
     key_algorithm: "hmac-sha256"
     key_name: "dns_update"
-    key_secret: "$5$qMIbgT/B/jqj$LbEwOVIjtByVDxBBtlJFEmRi3OrgSMlFa0gGPH4m0NB"
+    key_secret: "{{ transfer_key_secret }}"
     server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
     zone: "{{ domain }}"
     record: "{{ item['subdomain'] }}.{{ domain }}"
