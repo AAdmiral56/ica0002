@@ -13,13 +13,13 @@
     - reverse_proxy
     - mysql
 
-- name: DNS servers
-  hosts: dns_server
-  become: yes
-  roles:
-    - bind
-  vars_files:
-    - vault1.yml
+#- name: DNS servers
+ # hosts: dns_server
+  #become: yes
+  #roles:
+  #  - bind
+  #vars_files:
+  #  - vault1.yml
 
 - name: Resolver
   hosts: all
