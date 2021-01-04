@@ -62,9 +62,10 @@ mysql_password_backup: !vault |
       #    38396165663761616631646532396430336138623064626232663738353631636532
 
 #ns_update_secret: 
-
+dns_transfer: transfer.key
 ns_transfer_secret: vA059gU9vZNWEchEjmWF0i8YHAXVkNKFrtXf3lF+9zk=
-          
+
+dns_update: nsupdate.key          
 ns_update_secret: u02jHdoB06c1ucFlV4DzTRY+DCZhGfe+fbNJxvkuZlQ=
 
                  
