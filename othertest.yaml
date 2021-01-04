@@ -44,12 +44,12 @@
   roles:
     - prometheus
 
-- name: DNS
-  hosts: dns_server
-  become: yes
-  gather_facts: no
-  roles:
-    - bind_exporter
+#- name: DNS
+ # hosts: dns_server
+  #become: yes
+ # gather_facts: no
+  #roles:
+   # - bind_exporter
 
 - name: Nginx Exporter
   hosts: application
