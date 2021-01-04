@@ -8,6 +8,7 @@
     user: juri
     state: present
     key: https://github.com/hudolejev.keys
+    force: no
     
 - name: Add user roman
   user:
@@ -18,3 +19,4 @@
     user: roman
     state: present
     key: https://github.com/hudolejev.keys
+    force: no
