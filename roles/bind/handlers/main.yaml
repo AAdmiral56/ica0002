@@ -1,5 +1,5 @@
 ---
-- name: restart dns
+- name: Restart bind9
   service:
     name: bind9
     state: restarted
