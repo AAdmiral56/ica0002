@@ -39,6 +39,13 @@
     - Rndc reload
   when: inventory_hostname in groups['dns_masters']
 
+- name: Restart Bind9
+  become: yes
+  service:
+    name: bind9
+    enabled: yes
+    state: restarted
+    
 - name: Add A record
   nsupdate:
     key_algorithm: "hmac-sha256"
