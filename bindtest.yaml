@@ -3,5 +3,3 @@
   become: yes
   roles:
     - bind
-  vars_files:
-    - vault1.yml
