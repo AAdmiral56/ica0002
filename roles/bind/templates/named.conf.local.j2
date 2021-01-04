@@ -1,8 +1,12 @@
 key "dns-update" {
-        algorithm HMAC-SHA512;
-        secret {{ ns_update_secret }};
+        algorithm hmac-sha256;
+        secret '$5$qMIbgT/B/jqj$LbEwOVIjtByVDxBBtlJFEmRi3OrgSMlFa0gGPH4m0NB';
 };
 
+key "dns-transfer" {
+        algorithm hmac-sha256;
+        secret '$5$qMIbgT/B/jqj$LbEwOVIjtByVDxBBtlJFEmRi3OrgSMlFa0gGPH4m0NB';
+};
 
 zone "{{ domain }}" {
     type master;
