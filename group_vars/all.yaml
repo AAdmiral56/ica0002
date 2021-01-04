@@ -10,6 +10,10 @@ aadmiral3PN: 6480
 reverse_domain:
  - reverse: 42.168.192.in-addr.arpa.
 
+allowed_networks:
+  - 192.168.42.0/24
+  - 127.0.0.0/8
+  
 dns_record:
  - name: vm1
    type: A
