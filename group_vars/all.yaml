@@ -67,10 +67,10 @@ mysql_password_backup: !vault |
 
 #ns_update_secret: 
 dns_transfer: transfer.key
-ns_transfer_secret: vA059gU9vZNWEchEjmWF0i8YHAXVkNKFrtXf3lF+9zk=
+dns_transfer_key: vA059gU9vZNWEchEjmWF0i8YHAXVkNKFrtXf3lF+9zk=
 
 dns_update: nsupdate.key          
-ns_update_secret: u02jHdoB06c1ucFlV4DzTRY+DCZhGfe+fbNJxvkuZlQ=
+dns_update_key: u02jHdoB06c1ucFlV4DzTRY+DCZhGfe+fbNJxvkuZlQ=
 
                  
 influxdb: influxdb
