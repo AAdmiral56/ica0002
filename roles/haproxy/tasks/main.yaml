@@ -27,4 +27,4 @@
     ports:
       - "9101:9101"
     command: --haproxy.scrape-uri="http://vm2:88/haproxy?stats;csv"
-  when: inventory_hostname == "vm22"
+  when: inventory_hostname == "vm2"
