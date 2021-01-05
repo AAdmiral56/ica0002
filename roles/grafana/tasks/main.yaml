@@ -10,6 +10,11 @@
     state: started
     enabled: yes
 
+- name: Ensure group "grafana" exists
+  group:
+    name: grafana
+    state: present
+    
 - name: Copy grafana configuration
   copy:
     src: grafana.ini

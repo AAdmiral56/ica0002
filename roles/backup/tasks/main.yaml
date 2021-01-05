@@ -12,6 +12,11 @@
     groups: prometheus
   when: inventory_hostname == "vm1"
 
+- name: Ensure group "grafana" exists
+  group:
+    name: grafana
+    state: present
+    
 - name: Add user to mysql, influxdb, grafana on vm2
   user:
     name: backup
