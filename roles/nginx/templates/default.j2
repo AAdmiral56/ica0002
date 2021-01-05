@@ -13,7 +13,7 @@ server {
 #Reverse proxy for Agama
 {% if inventory_hostname in groups['app_servers'] %}
     location / {
-         proxy_pass http://{{ localhost_address }}:{{ docker_agama_port }};
+         proxy_pass http://{{ localhost_address }}:8000;
          proxy_set_header Host $http_host;
       #  uwsgi_pass {{ localhost_address }}:5000;
       #  include uwsgi_params;
@@ -76,7 +76,7 @@ server {
 #Reverse proxy for Grafana
 
    location /grafana {
-       proxy_pass http://{{ localhost_address }}:{{ docker_grafana_port }};
+       proxy_pass http://{{ localhost_address }}:3001;
      # proxy_pass http://{{ localhost_address }}:3000;
     }
 {% endif %}
@@ -100,7 +100,7 @@ server {
 #Reverse proxy for HAProxy
 
      location /haproxy {
-        proxy_pass http://{{ localhost_address }}:{{ haproxy_port }}/haproxy?stats;
+        proxy_pass http://{{ localhost_address }}:9101/haproxy?stats;
      }
 {% endif %}
 
