@@ -4,6 +4,11 @@
     name: prometheus-mysqld-exporter
     force_apt_get: yes
 
+- name: Create directory
+  file:
+    path: /var/lib/prometheus
+    state: directory
+     
 - name: Copy .my.cnf
   template:
     src: .my.cnf.j2
@@ -16,3 +21,9 @@
     password: "{{ mysql_exporter_password }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
     priv: "*.*:PROCESS,REPLICATION CLIENT,SELECT"
+    
+- name: Enabled
+  service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: yes
