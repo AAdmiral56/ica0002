@@ -5,6 +5,13 @@
   roles:
     - init
 
+
+- name: DNS servers
+  hosts: dns_server
+  become: yes
+  roles:
+    - bind
+    
 - name: Setup for Application VMs
   hosts: application
   become: yes

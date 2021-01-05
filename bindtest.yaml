@@ -1,5 +1,31 @@
-- name: DNS servers
-  hosts: dns_server
+#- name: DNS servers
+ # hosts: dns_server
+ # become: yes
+  #roles:
+   # - bind
+    
+- name: Node Exporter
+  hosts: all
   become: yes
   roles:
-    - bind
+    - node_exporters
+
+- name: Prometheus
+  hosts: internal
+  become: yes
+  roles:
+    - prometheus
+
+- name: DNS
+  hosts: dns_server
+  become: yes
+  gather_facts: no
+  roles:
+    - bind_exporter
+
+- name: Nginx Exporter
+  hosts: application
+  become: yes
+  gather_facts: no
+  roles:
+    - nginx_exporter
