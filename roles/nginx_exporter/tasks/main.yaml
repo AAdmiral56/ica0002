@@ -7,9 +7,9 @@
 
 # Run /usr/local/bin/nginx-prometheus-exporter
 - name: Make service unit
-  copy:
-    src: prometheus-nginx-exporter.service
-    dest: /etc/systemd/system
+  template:
+      src: nginx-prometheus-exporter.service.j2
+      dest: /etc/systemd/system/nginx-prometheus-exporter.service
   notify: Reload daemon
 
 - name: Start Nginx exporter
