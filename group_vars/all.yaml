@@ -3,7 +3,6 @@ dns_forwarders:
 
 rev_domain: 42.168.192.in-addr.arpa
 
-vm3_port: 8580
 hostname: adattiva
 domain: adattiva.xyz
 startup_name: adattiva

@@ -1,9 +1,3 @@
-- name: Node Exporter
-  hosts: all
-  become: yes
-  roles:
-    - node_exporters
-
 - name: Prometheus
   hosts: internal
   become: yes
