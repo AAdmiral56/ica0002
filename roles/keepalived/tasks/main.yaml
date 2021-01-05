@@ -2,7 +2,8 @@
 - name: Install keepalived
   apt:
     name: keepalived
-
+    state: latest
+    
 - name: Configure keepalived
   template:
     src: keepalived.conf.j2
@@ -15,7 +16,7 @@
     dest: /usr/local/bin
     remote_src: yes
 
-- name: Servicizing
+- name: creating service for it
   template:
     src: keepalived-prometheus-exporter.service.j2
     dest: /etc/systemd/system/keepalived-prometheus-exporter.service

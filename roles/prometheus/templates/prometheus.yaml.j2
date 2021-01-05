@@ -1,74 +1,67 @@
 global:
-  scrape_interval:     15s # By default, scrape targets every 15 seconds.
-  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+  scrape_interval:     15s 
+  evaluation_interval:  30s 
 
 scrape_configs:
-
-  - job_name: prometheus
-    scrape_interval: 5s
-    scrape_timeout: 5s
-    static_configs:
-      - targets: ['localhost:9090']
+# Override the global default and scrape targets from this job every 5 seconds.
+#  scrape_interval: 5s
+#  scrape_timeout: 5s
 
   - job_name: linux
     static_configs:
       - targets: 
-        - {{ groups['application'][0] }}.{{ domain }}:{{ prometheus_jobs[0].port }}
-        - {{ groups['application'][1] }}.{{ domain }}:{{ prometheus_jobs[0].port }}
-        - {{ groups['internal'][0] }}.{{ domain }}:{{ prometheus_jobs[0].port }}
+{% for vm in groups['all'] %}
+#       - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}
+        - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['node']['port'] }}
+{% endfor %}
 
-        #- vm1.{{ domain }}:{{ prometheus_jobs[0].port }}
-        #- vm2.{{ domain }}:{{ prometheus_jobs[0].port }}
-        #- vm3.{{ domain }}:{{ prometheus_jobs[0].port }}
-
-  - job_name: bind
+  - job_name: nginx_exporters
     static_configs:
-      - targets: 
-        - {{ groups['application'][0] }}.{{ domain }}:{{ prometheus_jobs[1].port }}
-        - {{ groups['application'][1] }}.{{ domain }}:{{ prometheus_jobs[1].port }}
-        - {{ groups['internal'][0] }}.{{ domain }}:{{ prometheus_jobs[1].port }}
+      - targets:
+{% for vm in groups['web_servers'] %}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_exporters['nginx']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['nginx']['port'] }}
+{% endfor %}
 
-        #- vm1.{{ domain }}:{{ prometheus_jobs[1].port }}
-        #- vm2.{{ domain }}:{{ prometheus_jobs[1].port }}
-        #- vm3.{{ domain }}:{{ prometheus_jobs[1].port }}
-
-  - job_name: mysql
+  - job_name: mysql_exporter
     static_configs:
-      - targets: 
-        - {{ groups['application'][0] }}.{{ domain }}:{{ prometheus_jobs[2].port }}
-        - {{ groups['application'][1] }}.{{ domain }}:{{ prometheus_jobs[2].port }}
+      - targets:
+{% for vm in groups['db_servers'] %}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_exporters['mysql']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['mysql']['port'] }}
+{% endfor %}
 
-        #- vm1.{{ domain }}:{{ prometheus_jobs[2].port }}
-        #- vm2.{{ domain }}:{{ prometheus_jobs[2].port }}
 
-  - job_name: nginx
+
+  - job_name: bind_exporter
     static_configs:
-      - targets: 
-        - {{ groups['application'][0] }}.{{ domain }}:{{ prometheus_jobs[3].port }}
-        - {{ groups['application'][1] }}.{{ domain }}:{{ prometheus_jobs[3].port }}
+      - targets:
+{% for vm in groups['dns_servers'] %}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_exporters['bind']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['bind']['port'] }}
+{% endfor %}
 
-        #- vm1.{{ domain }}:{{ prometheus_jobs[3].port }}
 
-  # - job_name: mysql
-  #  static_configs:
-  #    - targets: 
-  #      - vm1.{{ domain }}:9104
 
-  - job_name: haproxy
+
+#Lab 13
+
+
+  - job_name: haproxy_exporter
+
     static_configs:
-      - targets: 
-        - {{ groups['application'][0] }}.{{ domain }}:{{ prometheus_jobs[4].port }}
-        - {{ groups['application'][1] }}.{{ domain }}:{{ prometheus_jobs[4].port }}
+      - targets:
+{% for vm in groups['haproxy'] %}
+        - {{ hostvars[vm]['inventory_hostname'] }}:{{ docker_haproxy_exporter_port }}
+{% endfor %}
 
-        #- vm1.{{ domain }}:{{ prometheus_jobs[4].port }}
-        #- vm2.{{ domain }}:{{ prometheus_jobs[4].port }}
 
-  - job_name: keepalived
+
+
+  - job_name: keepalived_exporter
+
     static_configs:
-    - targets: 
-        - {{ groups['application'][0] }}.{{ domain }}:{{ prometheus_jobs[5].port }}
-        - {{ groups['application'][1] }}.{{ domain }}:{{ prometheus_jobs[5].port }}
-
-        #- vm1.{{ domain }}:{{ prometheus_jobs[5].port }}
-        #- vm2.{{ domain }}:{{ prometheus_jobs[5].port }}
-
+      - targets:
+{% for vm in groups['haproxy'] %}
+        - {{ hostvars[vm]['inventory_hostname'] }}:{{ keepalived_exporter_port }}
+{% endfor %}
