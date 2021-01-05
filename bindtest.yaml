@@ -1,9 +1,3 @@
-#- name: DNS servers
- # hosts: dns_server
- # become: yes
-  #roles:
-   # - bind
-    
 - name: Node Exporter
   hosts: all
   become: yes
