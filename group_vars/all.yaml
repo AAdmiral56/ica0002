@@ -130,6 +130,20 @@ prometheus_jobs:
   - name: keepalived
     targets: "{{ groups['all'] }}"
     port: 9165
+
+prometheus_port_info:
+
+  node:
+    port: 9100
+
+  nginx:
+    port: 9113
+
+  bind:
+    port: 9119
+
+  mysql:
+    port: 9104
     
 a_record:
   - subdomain: backup
