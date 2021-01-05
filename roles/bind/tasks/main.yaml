@@ -5,7 +5,6 @@
        - bind9
        - python3-dnspython
      state: latest
-     force_apt_get: yes
      update_cache: yes
 
 
