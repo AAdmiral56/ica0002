@@ -2,7 +2,7 @@ dns_forwarders:
   - 8.8.8.8
 
 rev_domain: 42.168.192.in-addr.arpa
-vm3_port: 6522
+vm3_port: 11122
 hostname: adattiva
 domain: adattiva.xyz
 startup_name: adattiva
@@ -17,13 +17,13 @@ allowed_networks:
 dns_record:
  - name: vm1
    type: A
-   ipaddress: 192.168.42.31
+   ipaddress: 192.168.42.21
  - name: vm2
    type: A
-   ipaddress: 192.168.42.21
+   ipaddress: 192.168.42.31
  - name: vm3
    type: A
-   ipaddress: 192.168.42.65
+   ipaddress: 192.168.42.111
  - name: backup
    type: A
    ipaddress: 192.168.42.156
