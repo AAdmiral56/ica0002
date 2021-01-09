@@ -21,7 +21,7 @@ allowed_networks:
   - 192.168.42.0/24
   - 127.0.0.0/8
 resolv_conf_search_domains: adattiva.xyz
-
+nginx_container_per_vm: 1
 docker_grafana_port: 3001
 docker_agama_port: 8000
 haproxy_port: 88
