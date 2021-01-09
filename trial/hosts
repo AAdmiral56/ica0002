@@ -17,7 +17,7 @@ vm1 mysql_server_id=96
 vm2
 
 [grafana]
-vm2
+vm3
 
 [prometheus]
 vm1

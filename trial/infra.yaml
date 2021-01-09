@@ -12,7 +12,7 @@
 
 
  - name: DNS servers
-   hosts: dns_servers
+   hosts: dns_server
    become: yes
    roles:
      - bind
@@ -21,7 +21,7 @@
 
 
  - name: Prometheus
-   hosts: prometheus
+   hosts: internal
    become: yes
    roles:
      - prometheus
@@ -60,7 +60,7 @@
      - mysql
 
  - name: DNS servers
-   hosts: dns_servers
+   hosts: dns_server
    become: yes
    roles:
      - bind_exporter
@@ -93,7 +93,7 @@
 
 
  - name: Pinger
-   hosts: pinger
+   hosts: influxdb
    become: yes
    gather_facts: no
    roles:
@@ -113,7 +113,7 @@
 
 
  - name: Install docker
-   hosts: docker
+   hosts: all
    gather_facts: false
    become: yes
    roles:
@@ -133,7 +133,7 @@
 
 
  - name: Setup Agama Docker container
-   hosts: app_servers
+   hosts: application
    gather_facts: no
    become: yes
    roles:
