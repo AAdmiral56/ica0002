@@ -13,7 +13,7 @@
 
 - name: Override MySQL config and Restart 
   template:
-    src: override.cnf
+    src: override.cnf.j2
     dest: /etc/mysql/mysql.conf.d/
   notify: restart mysql
 
@@ -37,8 +37,8 @@
 
 - name: Create MySQL replication user
   mysql_user:
-    name: "{{ mysql_replication_user }}"
-    password: "{{ mysql_replication_pass }}"
+    name: "{{ mysql_database_backup }}"
+    password: "{{ mysql_password }}"
     priv: "*.*:REPLICATION SLAVE"
     host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock
