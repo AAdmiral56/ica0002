@@ -26,8 +26,6 @@
   apt:
     - python3-flask-sqlalchemy
     - python3-pymysql
-    state: latest
-    force_apt_get: yes
         
 - name: Agama Docker image
   docker_image:
