@@ -15,5 +15,5 @@
 - name: Start service nginx-exporter, if not started
   service:
       name: nginx-prometheus-exporter
-      state: started
+      state: restarted
       enabled: yes
