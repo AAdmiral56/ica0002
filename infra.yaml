@@ -85,11 +85,11 @@
    become: yes
    gather_facts: no
    roles:
-     - node_exporter
+     - node_exporters
      - rsyslog
    tags:
      - rsyslog
-     - node_exporter
+     - node_exporters
 
 
  - name: Pinger
