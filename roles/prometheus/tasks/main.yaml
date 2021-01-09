@@ -1,38 +1,18 @@
 ---
 - name: Install Prometheus
-  apt: 
-    name: prometheus
+  apt:
+    name: 
+      - prometheus
+    force_apt_get: yes
 
 - name: Configure Prometheus
-  template:
-    src: prometheus.yaml.j2
+  template: 
+    src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
   notify: Restart Prometheus
 
-- name: Open up prometheus
-  template:
+- name: Make prometheus available
+  copy:
     src: prometheus
     dest: /etc/default/prometheus
-  notify: 
-    - Systemctl daemon-reload
-    - Restart Prometheus
-
-- name: Configure Prometheus' web path
-  template:
-    src: prometheus.service.j2
-    dest: /etc/systemd/system/prometheus.service
-  notify: 
-    - Systemctl daemon-reload
-    - Restart Prometheus 
-    - Restart Nginx
-
-- name: Enabled
-  service:
-    name: prometheus
-    state: started
-    enabled: yes
-    
-- name: restart prometheus
-  service:
-    name: prometheus-node-exporter
-    state: restarted
+  notify: Restart Prometheus
