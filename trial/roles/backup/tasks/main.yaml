@@ -15,7 +15,6 @@
     priv: "{{ mysql_database }}.*:SELECT,LOCK TABLES"
     host: "localhost"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  no_log: true
   when: inventory_hostname == "vm2"
 
 - name: Copy MySQL configuration file
