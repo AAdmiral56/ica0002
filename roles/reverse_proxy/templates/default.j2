@@ -7,7 +7,7 @@ server {
 
     server_name _;
     
-    {% if inventory_hostname in groups['application'] %}
+    {% if inventory_hostname in groups['web_servers'] %}
     location / {
 		proxy_pass http://127.0.0.1:{{ agama_port }};
 	}
