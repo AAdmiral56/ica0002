@@ -85,5 +85,5 @@
  - name: Start service bind9, if not started
    service:
      name: bind9
-     state: started
+     state: restarted
      enabled: yes
