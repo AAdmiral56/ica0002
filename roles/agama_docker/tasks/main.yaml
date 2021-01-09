@@ -1,4 +1,12 @@
 ---
+- name: Install Bind9 and dnspython
+   apt:
+     name:
+       - python3-flask-sqlalchemy
+       - python3-pymysql
+     state: latest
+     update_cache: yes
+     
 - name: add user agama
   user:
     name: agama
@@ -20,12 +28,8 @@
 
 # - name: Download Dockerfile
 #   template: 
-#     src: Dockerfile.j2
-#     dest: /opt/agama/Dockerfile
-- name: Install application dependencies
-  apt:
-    - python3-flask-sqlalchemy
-    - python3-pymysql
+#     src: 
+#     dest: /opt/agama/DockerfileDockerfile.j2
         
 - name: Agama Docker image
   docker_image:
