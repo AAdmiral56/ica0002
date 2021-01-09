@@ -1,8 +1,8 @@
-- name: Prometheus
-  hosts: internal
+- name: agama
+  hosts: vm2
   become: yes
   roles:
-    - prometheus
+    - agama_docker
     
 - name: DNS servers
   hosts: application
@@ -13,7 +13,6 @@
 - name: DNS
   hosts: application
   become: yes
-  gather_facts: no
   roles:
     - bind_exporter
 
