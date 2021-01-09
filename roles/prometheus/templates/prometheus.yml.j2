@@ -12,10 +12,53 @@ scrape_configs:
         - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }} 
    {% endfor %}
 
-{% for job in prometheus_jobs %}
-  - job_name: {{ job.name }}
+  - job_name: nginx_exporters
     static_configs:
       - targets:
-        - {{ job.target }}.{{ domain }}:{{ job.port }}
+{% for vm in groups['web_servers'] %}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_port_info['nginx']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_port_info['nginx']['port'] }}
+{% endfor %}
 
+  - job_name: mysql_exporter
+    static_configs:
+      - targets:
+{% for vm in groups['db_servers'] %}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_port_info['mysql']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_port_info['mysql']['port'] }}
+{% endfor %}
+
+
+
+  - job_name: bind_exporter
+    static_configs:
+      - targets:
+{% for vm in groups['dns_servers'] %}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_port_info['bind']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_port_info['bind']['port'] }}
+{% endfor %}
+
+
+
+
+#Lab 13
+
+
+  - job_name: haproxy_exporter
+
+    static_configs:
+      - targets:
+{% for vm in groups['haproxy'] %}
+        - {{ hostvars[vm]['inventory_hostname'] }}:9101
+{% endfor %}
+
+
+
+
+  - job_name: keepalived_exporter
+
+    static_configs:
+      - targets:
+{% for vm in groups['haproxy'] %}
+        - {{ hostvars[vm]['inventory_hostname'] }}:9165
 {% endfor %}
