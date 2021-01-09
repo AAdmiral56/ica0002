@@ -10,8 +10,8 @@
 
 - name: Create MySQL backup user
   mysql_user:
-    name: "{{ mysql_backup_user }}"
-    password: "{{ mysql_backup_pass }}"
+    name: "{{ mysql_database_backup }}"
+    password: "{{ mysql_password_backup }}"
     priv: "{{ mysql_database }}.*:SELECT,LOCK TABLES"
     host: "localhost"
     login_unix_socket: /var/run/mysqld/mysqld.sock
