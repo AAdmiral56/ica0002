@@ -12,23 +12,23 @@ scrape_configs:
       - targets: 
 {% for vm in groups['all'] %}
 #       - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}
-        - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['node']['port'] }}
+        - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_jobs['node']['port'] }}
 {% endfor %}
 
   - job_name: nginx_exporters
     static_configs:
       - targets:
 {% for vm in groups['web_servers'] %}
-#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_exporters['nginx']['port'] }}
-         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['nginx']['port'] }}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_jobs['nginx']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_jobs['nginx']['port'] }}
 {% endfor %}
 
   - job_name: mysql_exporter
     static_configs:
       - targets:
 {% for vm in groups['db_servers'] %}
-#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_exporters['mysql']['port'] }}
-         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['mysql']['port'] }}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_jobs['mysql']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_jobs['mysql']['port'] }}
 {% endfor %}
 
 
@@ -37,8 +37,8 @@ scrape_configs:
     static_configs:
       - targets:
 {% for vm in groups['dns_servers'] %}
-#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_exporters['bind']['port'] }}
-         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['bind']['port'] }}
+#        - {{ hostvars[vm]['inventory_hostname'] }}.{{ domain }}:{{ prometheus_jobs['bind']['port'] }}
+         - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_jobs['bind']['port'] }}
 {% endfor %}
 
 
