@@ -11,7 +11,7 @@ server {
 
 
 #Reverse proxy for Agama
-{% if inventory_hostname in groups['app_servers'] %}
+{% if inventory_hostname in groups['application'] %}
     location / {
          proxy_pass http://{{ localhost_address }}:8000;
          proxy_set_header Host $http_host;
@@ -22,7 +22,7 @@ server {
 
 
 
-{% if inventory_hostname in groups['web_servers'] %}
+{% if inventory_hostname in groups['application'] %}
 #Activate Nginx statistics
 
         location /stub_status {
@@ -40,7 +40,7 @@ server {
    }
 {% endif %}
 
-{% if inventory_hostname in groups['web_servers'] %}
+{% if inventory_hostname in groups['application'] %}
 #Reverse proxy for Nginx exporter
 
   location /nginx-metrics {
@@ -56,7 +56,7 @@ server {
     }
 {% endif %}
 
-{% if inventory_hostname in groups['dns_servers'] %}
+{% if inventory_hostname in groups['application'] %}
 #Reverse proxy for Bind exporter
 
    location /bind-metrics {
@@ -64,7 +64,7 @@ server {
     }
 {% endif %}
 
-{% if inventory_hostname in groups['prometheus'] %}
+{% if inventory_hostname in groups['internal'] %}
 #Reverse proxy for Prometheus
 
     location /prometheus {

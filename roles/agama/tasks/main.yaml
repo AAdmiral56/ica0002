@@ -10,15 +10,19 @@
     path: /opt/agama
     state: directory
     owner: agama
-    mode: 0700
+    mode: 0755
 
 - name: Install application dependencies
   apt:
-    name: python3-flask-sqlalchemy
-    state: present
+    - python3-flask-sqlalchemy
+    - python3-pymysql
+    state: latest
     force_apt_get: yes
 
 - name: Copy agama.py
   get_url:
     dest: /opt/agama/agama.py
     url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    owner: agama
+    group: agama
+    mode: 0755

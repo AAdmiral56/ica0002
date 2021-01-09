@@ -44,3 +44,8 @@ vm2
 
 [internal]
 vm3
+
+[node_exporters]
+vm1
+vm2
+vm3

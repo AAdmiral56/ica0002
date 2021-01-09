@@ -113,16 +113,13 @@ prometheus_jobs:
     targets: "{{ groups['all'] }}"
     port: 9100
   - name: bind
-    targets:
-      - "{{ groups['all'] }}"
+    targets: "{{ groups['all'] }}"
     port: 9119
   - name: mysql
-    targets:
-      - "{{ groups['all'] }}"
+    targets: "{{ groups['all'] }}"
     port: 9104
   - name: www
-    targets:
-      - "{{ groups['all'] }}"
+    targets: "{{ groups['all'] }}"
     port: 9113
   - name: haproxy
     targets: "{{ groups['all'] }}"
