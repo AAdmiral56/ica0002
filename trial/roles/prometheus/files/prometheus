@@ -1,1 +1,1 @@
-$ARGS="--web.external-url=http://vm1.{{ domain }}:10180/prometheus"
+$ARGS="--web.external-url=http://vm3.{{ domain }}:12680/prometheus"
