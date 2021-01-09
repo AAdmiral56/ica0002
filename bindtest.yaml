@@ -1,5 +1,5 @@
 - name: agama
-  hosts: vm2
+  hosts: application
   become: yes
   roles:
     - agama_docker
