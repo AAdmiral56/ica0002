@@ -1,0 +1,20 @@
+---
+ - name: User exporter
+   user:
+     name: prometheus
+
+ - name: Install Bind9 Exporter Package
+   apt:
+     name: prometheus-bind-exporter
+     state: latest
+
+ - name: Wait for 10 sec and proceed
+   wait_for:
+     timeout: 10
+
+
+ - name: Enabled
+   service:
+     name: prometheus-bind-exporter
+     state: started
+     enabled: yes
