@@ -76,11 +76,13 @@ dns_update_key: u02jHdoB06c1ucFlV4DzTRY+DCZhGfe+fbNJxvkuZlQ=
 influxdb: influxdb
 
 backup: 192.168.42.156
-
+localhost_address: 127.0.0.1
 grafana_port: 3001
 agama_port: 8001
 prometheus_port: 9090
 nginx_container_per_vm: 1
+local_network: 192.168.42.0/24
+localhost: 127.0.0.0/8
 
 dns_cnames:
   - cname: ns
