@@ -1,11 +1,11 @@
 ---
 - name: Install Bind9 and dnspython
-   apt:
-     name:
-       - python3-flask-sqlalchemy
-       - python3-pymysql
-     state: latest
-     update_cache: yes
+  apt:
+    name:
+      - python3-flask-sqlalchemy
+      - python3-pymysql
+    state: latest
+    update_cache: yes
      
 - name: add user agama
   user:
