@@ -37,7 +37,7 @@
   hosts: all
   become: yes
   roles:
-    - node_exporters
+    - node_exporter
 
 - name: Prometheus
   hosts: prometheus
@@ -71,7 +71,7 @@
   become: yes
   gather_facts: no
   roles:
-    - node_exporters
+    - node_exporter
 
 - name: InfluxDB
   hosts: influxdb
