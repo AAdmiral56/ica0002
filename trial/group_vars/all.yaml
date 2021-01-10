@@ -2,7 +2,7 @@ dns_forwarders:
   - 8.8.8.8
 
 rev_domain: 42.168.192.in-addr.arpa
-vm3_port_number: 12680
+vm3_port_number: 7380
 hostname: adattiva
 domain: adattiva.xyz
 startup_name: adattiva
@@ -13,10 +13,10 @@ localhost_address: 127.0.0.1
 local_network: 192.168.42.0/24
 
 localhost: 127.0.0.0/8
-vm1_ip: 192.168.42.100
-vm2_ip: 192.168.42.107
+vm1_ip: 192.168.42.42
+vm2_ip: 192.168.42.28
 backup_ip: 192.168.42.156
-vm1_port_number: 12680
+vm1_port_number: 7380
 allowed_networks:
   - 192.168.42.0/24
   - 127.0.0.0/8
@@ -32,13 +32,13 @@ docker_haproxy_exporter_port: 9101
 dns_record:
  - name: vm1
    type: A
-   ipaddress: 192.168.42.100
+   ipaddress: 192.168.42.42
  - name: vm2
    type: A
-   ipaddress: 192.168.42.107
+   ipaddress: 192.168.42.28
  - name: vm3
    type: A
-   ipaddress: 192.168.42.126
+   ipaddress: 192.168.42.73
  - name: backup
    type: A
    ipaddress: 192.168.42.156
