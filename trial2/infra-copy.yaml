@@ -13,11 +13,11 @@
     - bind
     
 - name: Setup for Application VMs
-  hosts: application
+  hosts: haproxy
   become: yes
   roles:
     - users
-    - reverse_proxy
+    - reverse
     - mysql
     
 #- name: DNS servers
@@ -47,7 +47,7 @@
     - node_exporters
 
 - name: Prometheus
-  hosts: internal
+  hosts: prometheus
   become: yes
   roles:
     - prometheus
@@ -60,14 +60,14 @@
     - bind_exporter
 
 - name: Nginx Exporter
-  hosts: application
+  hosts: haproxy
   become: yes
   gather_facts: no
   roles:
     - nginx_exporter
 
 - name: Prometheus
-  hosts: internal
+  hosts: prometheus
   become: yes
   gather_facts: yes
   roles:
@@ -115,7 +115,7 @@
     - grafana_docker
 
 - name: Agama Docker
-  hosts: application
+  hosts: haproxy
   become: yes
   roles:
     - agama_docker
