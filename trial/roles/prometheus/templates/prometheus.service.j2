@@ -6,7 +6,7 @@ Documentation=https://prometheus.io/docs/introduction/overview/
 Restart=always
 User=prometheus
 EnvironmentFile=/etc/default/prometheus
-ExecStart=/usr/bin/prometheus $ARGS --web.external-url=http://{{ ansible_host }}:{{ vm3_port }}/prometheus
+ExecStart=/usr/bin/prometheus $ARGS --web.external-url=http://{{ vm3_ip }}:{{ vm3_port }}/prometheus
     --config.file /etc/prometheus/prometheus.yml \
     --storage.tsdb.path /var/lib/prometheus/ \
     --web.console.templates=/etc/prometheus/consoles \
