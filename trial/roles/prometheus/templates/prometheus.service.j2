@@ -7,6 +7,10 @@ Restart=always
 User=prometheus
 EnvironmentFile=/etc/default/prometheus
 ExecStart=/usr/bin/prometheus $ARGS --web.external-url=http://{{ ansible_host }}:{{ vm3_port }}/prometheus
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries  
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=20s
 SendSIGKILL=no
