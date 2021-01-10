@@ -12,7 +12,7 @@
   notify: Restart Prometheus
 
 - name: Make prometheus available
-  copy:
+  template:
     src: prometheus.j2
     dest: /etc/default/prometheus
   notify: Restart Prometheus
