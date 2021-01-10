@@ -42,7 +42,6 @@
     priv: "*.*:REPLICATION SLAVE"
     host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  no_log: true
 
 
 - name: Start MySQL server
