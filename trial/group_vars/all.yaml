@@ -15,6 +15,7 @@ local_network: 192.168.42.0/24
 localhost: 127.0.0.0/8
 vm1_ip: 192.168.42.42
 vm2_ip: 192.168.42.28
+vm3_ip: 192.168.42.73
 backup_ip: 192.168.42.156
 vm1_port_number: 7380
 allowed_networks:
