@@ -15,7 +15,6 @@ server {
     location / {
          proxy_pass http://{{ localhost_address }}:{{ docker_agama_port }};
          proxy_set_header Host $http_host;
-      #  uwsgi_pass {{ localhost_address }}:5000;
       #  include uwsgi_params;
     }
 {% endif %}
