@@ -35,6 +35,10 @@ vm1
 dns_masters
 dns_slaves
 
+[dns_servers:children]
+dns_masters
+dns_slaves
+
 [application]
 vm1
 vm2
