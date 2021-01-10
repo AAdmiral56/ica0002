@@ -17,9 +17,16 @@ vrrp_instance VRRP {
     priority 100
     {% endif %}
     advert_int 1
+    {% if inventory_hostname == 'vm1'%}
     virtual_ipaddress {
         192.168.100.{{ hostvars['vm1']['ansible_default_ipv4']['address'].split('.')[3] }}
     }
+    {% else %}
+    virtual_ipaddress {
+        192.168.100.{{ hostvars['vm2']['ansible_default_ipv4']['address'].split('.')[3] }}
+    }
+    {% endif %}
+    
     unicast_peer {
     	{% for vm in groups['haproxy']%}
     		{% if inventory_hostname != vm %}
