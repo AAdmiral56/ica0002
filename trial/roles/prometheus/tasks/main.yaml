@@ -13,6 +13,6 @@
 
 - name: Make prometheus available
   copy:
-    src: prometheus.j2
+    src: prometheus
     dest: /etc/default/prometheus
   notify: Restart Prometheus
