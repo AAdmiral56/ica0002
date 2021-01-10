@@ -5,16 +5,11 @@
       - prometheus
     force_apt_get: yes
     
-- name: Add the user prometheus
-  user:
-    name: prometheus
-    group: root
-    
 - name: Change file ownership
   file:
-    path: /var/lib/prometheus/
+    path: /var/lib/prometheus/metrics2/
     owner: prometheus
-    group: root
+    group: prometheus
     mode: '0770'
   notify: Restart Prometheus
     

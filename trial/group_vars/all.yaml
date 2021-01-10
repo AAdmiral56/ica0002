@@ -33,10 +33,10 @@ docker_haproxy_exporter_port: 9101
 dns_record:
  - name: vm1
    type: A
-   ipaddress: 192.168.42.42
+   ipaddress: 192.168.42.55
  - name: vm2
    type: A
-   ipaddress: 192.168.42.28
+   ipaddress: 192.168.42.42
  - name: vm3
    type: A
    ipaddress: 192.168.42.73
