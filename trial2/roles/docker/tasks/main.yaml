@@ -1,6 +1,9 @@
 - name: Checking docker on latest version
   apt: name=docker.io
 
+- name: Checking docker on latest version
+  apt: name=docker-compose
+  
 - name: Checking docker's other component
   apt: name=python3-docker
 
