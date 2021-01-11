@@ -1,8 +1,7 @@
 - name: Ensure nginx is installed and in working state
   apt:
     name: nginx
-    state: latest
-    enabled: yes 
+    state: latest 
     
 - name: copy the nginx config file and restart nginx
   template:
