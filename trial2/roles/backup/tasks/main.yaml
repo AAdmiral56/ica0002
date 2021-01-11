@@ -32,7 +32,6 @@
   group:
     name: grafana
     state: present
-  when: inventory_hostname == groups['grafana'][0]
 
 
 
