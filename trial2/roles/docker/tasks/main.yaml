@@ -1,10 +1,10 @@
 ---
 - name: Install Docker
-  apt:
+  pip:
     name:
       - python3-docker
       - docker.io
-    state: latest
+   # state: latest
 
 - name: Start Docker service
   service:
