@@ -2,7 +2,8 @@
   apt:
     name: nginx
     state: latest
-
+    enabled: yes 
+    
 - name: copy the nginx config file and restart nginx
   template:
     src: default.j2
