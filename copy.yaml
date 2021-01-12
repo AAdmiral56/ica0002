@@ -3,7 +3,6 @@
 
 - name: Setup HAProxy and containerised HAProxy Prometheus exporter
   hosts: haproxy
-  gather_facts: false
   become: yes
   roles:
     - haproxy
