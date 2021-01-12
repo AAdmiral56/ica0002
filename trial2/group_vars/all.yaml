@@ -101,6 +101,7 @@ docker_haproxy_port: 9101
 agama_container_per_vm: 1
 keepalived_exporter_port: 9165
 docker_haproxy_exporter_port: 9101
+agama_port: 8000
 
 dns_record:
    - name: vm1
