@@ -11,9 +11,10 @@
       dest: /etc/systemd/system/nginx-prometheus-exporter.service
   notify:
       - Systemctl daemon-reload
+      - Restart nginx-prometheus-exporter
 
 - name: Start service nginx-exporter, if not started
   service:
       name: nginx-prometheus-exporter
-      state: restarted
+      state: started
       enabled: yes

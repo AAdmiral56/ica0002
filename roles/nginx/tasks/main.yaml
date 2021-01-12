@@ -1,23 +1,18 @@
----
 - name: Ensure nginx is installed and in working state
-  apt: 
+  apt:
     name: nginx
-    update_cache: yes
-    state: latest
+    state: latest 
     
-# - name: Serve index.html
-#   copy:
-#     src: ../files
-#     dest: /var/www/html
-  
-- name: Copy Nginx configuration
+- name: copy the nginx config file and restart nginx
   template:
     src: default.j2
-    dest: /etc/nginx/sites-enabled/default
-  notify: Restart Nginx
+    dest: /etc/nginx/sites-available/default
+#    validate: nginx -t -c %s
+  notify: restart nginx
+
 
 - name: start nginx
   service:
     name: nginx
     state: started
-    enabled: yes
+    enabled: yes 

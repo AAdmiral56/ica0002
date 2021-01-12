@@ -11,18 +11,17 @@ server {
 
 
 #Reverse proxy for Agama
-{% if inventory_hostname in groups['application'] %}
+{% if inventory_hostname in groups['app_servers'] %}
     location / {
-         proxy_pass http://{{ localhost_address }}:8000;
+         proxy_pass http://{{ localhost_address }}:{{ docker_agama_port }};
          proxy_set_header Host $http_host;
-      #  uwsgi_pass {{ localhost_address }}:5000;
       #  include uwsgi_params;
     }
 {% endif %}
 
 
 
-{% if inventory_hostname in groups['application'] %}
+{% if inventory_hostname in groups['web_servers'] %}
 #Activate Nginx statistics
 
         location /stub_status {
@@ -36,15 +35,15 @@ server {
 #Reverse proxy for node exporters
 
    location /metrics {
-     proxy_pass http://{{ localhost_address }}:{{ prometheus_port_info['node']['port'] }}/metrics;
+     proxy_pass http://{{ localhost_address }}:{{ prometheus_exporters['node']['port'] }}/metrics;
    }
 {% endif %}
 
-{% if inventory_hostname in groups['application'] %}
+{% if inventory_hostname in groups['web_servers'] %}
 #Reverse proxy for Nginx exporter
 
   location /nginx-metrics {
-     proxy_pass http://{{ localhost_address }}:{{ prometheus_port_info['nginx']['port'] }}/metrics;
+     proxy_pass http://{{ localhost_address }}:{{ prometheus_exporters['nginx']['port'] }}/metrics;
    }
 {% endif %}
 
@@ -52,19 +51,19 @@ server {
 #Reverse proxy for MySQL exporter
 
    location /mysql-metrics {
-      proxy_pass http://{{ localhost_address }}:{{ prometheus_port_info['mysql']['port'] }}/metrics;
+      proxy_pass http://{{ localhost_address }}:{{ prometheus_exporters['mysql']['port'] }}/metrics;
     }
 {% endif %}
 
-{% if inventory_hostname in groups['application'] %}
+{% if inventory_hostname in groups['dns_servers'] %}
 #Reverse proxy for Bind exporter
 
    location /bind-metrics {
-      proxy_pass http://{{ localhost_address }}:{{ prometheus_port_info['bind']['port'] }}/metrics;
+      proxy_pass http://{{ localhost_address }}:{{ prometheus_exporters['bind']['port'] }}/metrics;
     }
 {% endif %}
 
-{% if inventory_hostname in groups['internal'] %}
+{% if inventory_hostname in groups['prometheus'] %}
 #Reverse proxy for Prometheus
 
     location /prometheus {
@@ -76,7 +75,7 @@ server {
 #Reverse proxy for Grafana
 
    location /grafana {
-       proxy_pass http://{{ localhost_address }}:3001;
+       proxy_pass http://{{ localhost_address }}:{{ docker_grafana_port }};
      # proxy_pass http://{{ localhost_address }}:3000;
     }
 {% endif %}
@@ -88,11 +87,11 @@ server {
 #Reverse proxy for HAProxy exporter
 
     location /haproxy-metrics {
-        proxy_pass http://{{ localhost_address }}:9101/metrics;
+        proxy_pass http://{{ localhost_address }}:{{ docker_haproxy_exporter_port }}/metrics;
     }
 
     location /keepalived-metrics {
-        proxy_pass http://{{ localhost_address }}:9165/metrics;
+        proxy_pass http://{{ localhost_address }}:{{ keepalived_exporter_port }}/metrics;
     }
 {% endif %}
 
@@ -100,7 +99,7 @@ server {
 #Reverse proxy for HAProxy
 
      location /haproxy {
-        proxy_pass http://{{ localhost_address }}:9101/haproxy?stats;
+        proxy_pass http://{{ localhost_address }}:{{ haproxy_port }}/haproxy?stats;
      }
 {% endif %}
 

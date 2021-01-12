@@ -3,9 +3,14 @@
   service:
     name: keepalived
     state: restarted
+    enabled: yes
 
-- name: Systemctl daemon-reload
-  shell: "systemctl daemon-reload"
+
+
+- name: Reload systemd
+  shell: systemctl daemon-reload
+
+
 
 - name: Restart keepalived exporter
   service:

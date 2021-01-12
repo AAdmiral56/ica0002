@@ -1,28 +1,29 @@
 ---
-- name: Create system user agama
+- name: Add user agama
   user:
     name: agama
-    state: present
     system: yes
 
-- name: Create directory /opt/agama
+- name: Create directory
   file:
-    path: /opt/agama
     state: directory
-    owner: agama
-    mode: 0755
-
-- name: Install application dependencies
-  apt:
-    - python3-flask-sqlalchemy
-    - python3-pymysql
-    state: latest
-    force_apt_get: yes
-
-- name: Copy agama.py
-  get_url:
-    dest: /opt/agama/agama.py
-    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    path: /opt/agama
     owner: agama
     group: agama
-    mode: 0755
+    mode: '0755'
+
+- name: Install python dependencies
+  package: 
+    name:
+      - python3-flask-sqlalchemy
+      - python3-pymysql
+    state: latest
+
+
+- name: Download agama.py
+  get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama
+    owner: agama
+    group: agama
+    mode: '0755'

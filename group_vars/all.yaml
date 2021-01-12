@@ -1,34 +1,5 @@
-dns_forwarders:
-  - 8.8.8.8
 
-rev_domain: 42.168.192.in-addr.arpa
-vm3_port: 11680
-hostname: adattiva
-domain: adattiva.xyz
-startup_name: adattiva
-aadmiral_nums: 6480
-reverse_domain:
- - reverse: 42.168.192.in-addr.arpa.
-
-allowed_networks:
-  - 192.168.42.0/24
-  - 127.0.0.0/8
-  
-dns_record:
- - name: vm1
-   type: A
-   ipaddress: 192.168.42.96
- - name: vm2
-   type: A
-   ipaddress: 192.168.42.71
- - name: vm3
-   type: A
-   ipaddress: 192.168.42.116
- - name: backup
-   type: A
-   ipaddress: 192.168.42.156
-    
-mysql_host: vm2
+mysql_host: "{{ groups['db_servers'][0] }}"
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -40,7 +11,7 @@ mysql_password: !vault |
           37656662383330646637633131303139343161383430336530336534376534636665
 
 mysql_exporter_user: exporter
-mysql_exporter_password: !vault |
+mysql_exporter_pass: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           30313965336365303234653130653163343639323261346333343136613236373765393134643135
           6335316633633561643232366163303332636334353831620a623066383034356465326562313162
@@ -48,89 +19,67 @@ mysql_exporter_password: !vault |
           6161333130636237300a656533633733656335363835336432343165333039326237363764316162
           64383864373737336232356335626432616637633938653836393838336364663734
 
-mysql_database_backup: backup
-mysql_password_backup: !vault |
+mysql_backup_user: backup
+mysql_backup_pass: !vault |
           $ANSIBLE_VAULT;1.1;AES256
-          66643033653339333234316563313230343935633463363665663630613239643465643833616632
-          3830303435346437393266363330396163353839333836640a646231626133396231626666346631
-          65326236363833623838316462363437313333333565306235336337393361613564623163656333
-          3134663133616363610a356161363930316565353139383439323933353065336237353464323263
-          31613762306137313439393133326237643564633466393238613364336632383432
-          
-#ns_transfer_secret: !vault |
- #         $ANSIBLE_VAULT;1.1;AES256
-  #        36393663343437653933353530653065353338616237343033363735303363616636656462396434
-   #       3137373765306132353764623966313564363535653230370a626133393337363131646434633732
-    #      37646364336431373832386334646530306634316364623138366662623331356361373538663433
-     #     6130646232303039330a616364643965643265653466333562643635356639646266646662386535
-      #    38396165663761616631646532396430336138623064626232663738353631636532
+          37346632663831366365653063356238313663316533643966376231396432653362383533383639
+          3464363162316430303333646133663835313462643463360a376535613037373566323164663764
+          65653234366630303534653536646563646436383434323836636333663131643864356264623763
+          6534303930326434620a633065643663663666613431323837613730393735366532386438363338
+          64366534323661393736646537353733636331316438323831663863643238393439326136633933
+          6461343236633866633338336537313863363963333064316439
 
-#ns_update_secret: 
-dns_transfer: transfer.key
-dns_transfer_key: vA059gU9vZNWEchEjmWF0i8YHAXVkNKFrtXf3lF+9zk=
 
-dns_update: nsupdate.key          
-dns_update_key: u02jHdoB06c1ucFlV4DzTRY+DCZhGfe+fbNJxvkuZlQ=
+mysql_replication_user: replication
+mysql_replication_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32366137346465343936633134356638643564316465383765343831316464666230303162393036
+          3133646133373762363561303937323065393936323935370a653464336336653363323762613231
+          66393433613961383135343632616436303331616362633637623338616235623864336237386534
+          3531666164343964380a313566393965636363633535303065333834303234396235393036663063
+          37623334393463306563663038663434643063313439373065663665643937386563396235313235
+          3866613362323237393431326561616138313562616461656364
 
-                 
-influxdb: influxdb
 
-backup: 192.168.42.156
+allowed_networks:
+  - 192.168.42.0/24
+  - 127.0.0.0/8
+
 localhost_address: 127.0.0.1
-grafana_port: 3001
-agama_port: 8001
-prometheus_port: 9090
-nginx_container_per_vm: 1
 local_network: 192.168.42.0/24
 localhost: 127.0.0.0/8
+vm1_ip: 192.168.42.13
+vm2_ip: 192.168.42.30
+backup_ip: 192.168.42.156
+vm1_port_number: 1322
+
+domain: cloud.ns
+startup_name: cloud
+dns_forwarders:
+  - 1.1.1.1
+  - 8.8.8.8
+  - 9.9.9.9
+  - 9.9.9.10
+resolv_conf_search_domains:
+  - cloud.ns
 
 dns_cnames:
   - cname: ns
-    real: "{{ groups['dns_server'][0] }}"
-    type: CNAME
+    real: "{{ groups['dns_servers'][0] }}"
   - cname: prometheus
     real: "{{ groups['prometheus'][0] }}"
-    type: CNAME
   - cname: db
     real: "{{ groups['db_servers'][0] }}"
-    type: CNAME
   - cname: www
     real: "{{ groups['web_servers'][0] }}"
-    type: CNAME
+  - cname: influxdb
+    real: "{{ groups['influxdb'][0] }}"
   - cname: grafana
     real: "{{ groups['grafana'][0] }}"
-    type: CNAME
-  - cname: grafana
-    real: "{{ groups['grafana'][0] }}"
-    type: CNAME
-  - cname: haproxy-1
+  - cname: haproxy
     real: "{{ groups['haproxy'][0] }}"
-    type: CNAME
-  - cname: haproxy-2
-    real: "{{ groups['haproxy'][1] }}"
-    type: CNAME
 
-prometheus_jobs:
-  - name: node
-    targets: "{{ groups['all'] }}"
-    port: 9100
-  - name: bind
-    targets: "{{ groups['all'] }}"
-    port: 9119
-  - name: mysql
-    targets: "{{ groups['all'] }}"
-    port: 9104
-  - name: www
-    targets: "{{ groups['all'] }}"
-    port: 9113
-  - name: haproxy
-    targets: "{{ groups['all'] }}"
-    port: 9101
-  - name: keepalived
-    targets: "{{ groups['all'] }}"
-    port: 9165
-
-prometheus_port_info:
+prometheus_exporters:
 
   node:
     port: 9100
@@ -143,7 +92,51 @@ prometheus_port_info:
 
   mysql:
     port: 9104
-    
-a_record:
-  - subdomain: backup
-    ip: 192.168.42.156    
+
+
+docker_grafana_port: 3001
+docker_agama_port: 8000
+haproxy_port: 88
+docker_haproxy_port: 9101
+agama_container_per_vm: 1
+keepalived_exporter_port: 9165
+docker_haproxy_exporter_port: 9101
+agama_port: 8000
+
+dns_record:
+   - name: vm1
+     type: A
+     ip: 192.168.42.13
+   - name: vm2
+     type: A
+     ip: 192.168.42.30
+   - name: vm3
+     type: A
+     ip: 192.168.42.79
+
+
+
+
+dns_transfer: transfer.key
+dns_transfer_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38343030616664303238303265666363653533393334626231303339303338313866353335396635
+          3339336334613864303163393538376336393032623063320a396430333663333466313038326437
+          31383336306136633664306537386336333461373464626631353634313934336166333164336334
+          3733646330303662380a366662343366613032636564356138616161336632323039626634326430
+          65623036303334373939376162343864333365623636366332633062323962633637316464653832
+          3964626332626639613664336264653330613533303033393039
+
+
+
+
+
+dns_update: nsupdate.key
+dns_update_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32373062306566353330623666373963623832383662636165333238333735333463633637373663
+          3533316164386632643664306136353231626662353239370a646262653264336264353038613062
+          66666334353135386135343462323134363932663761313961613638656166653433346630343134
+          3165643233356633350a663035356233626362346365343661366162333432383032643337343866
+          61653261336230646230313336623130313064343761356164653931303531303438643733666263
+          6134363664386564373438386462386434306332326430336563

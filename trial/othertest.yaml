@@ -1,5 +1,0 @@
-- name: Prometheus
-  hosts: internal
-  become: yes
-  roles:
-    - prometheus
