@@ -1,0 +1,209 @@
+### MySQL parameters
+
+mysql_database: agama
+mysql_user: agama
+mysql_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          64626235633237303736663566333632643565636533316333653039333234383639653666643733
+          6363653265303938646663383964323365636133643966610a353235316165643564616139306334
+          63326137633730303330663439333534386331383739373734346634383565346162306135616366
+          3330303936313262310a306366303038343131363935313939626661313664613236353261313361
+          3834
+
+mysql_exporter_user: mysql_exporter
+mysql_exporter_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30356636636337303761313964333731353535666164346433623530363637393265383363346337
+          3166356630346237613664326530333737373233333332320a353136356435306337373534653966
+          39303761616665393465353931316562313832303162363362653439613739336432336433386665
+          6333336637336465310a326635373533356434333438366436653739323963323862336364386161
+          6638
+
+mysql_backup_user: backup
+mysql_backup_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33333030656331653635643635663537363165656638323131353631616562303838386661353038
+          6461613439623061653939306362623261333262656363640a306165636361653636616261313362
+          36356261633866643064323465663531623437656565366532343564316234356436336134353434
+          3537646130383033320a306536656337346430353135393162313163616632393330393639316663
+          3034
+
+mysql_replication_user: replication
+mysql_replication_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33316131353131336235633739373330616435376461653337623534626537306161613232643865
+          3237363165353538363561663138393731363633636135350a373739343066303161663536363133
+          35613038333762383764326434323838333266353639663135616235343636383331636331353135
+          6532326165393764610a393636363939633233653134663430363039323833643637626539383832
+          3435
+
+### GitHub Ansible repository token for backup
+
+github_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62373331383163333739633337336231613135363033393733373635333430383632613931336361
+          3964333634613166656238663763363364343064653136370a613466633931346336613030666266
+          63643566333636363732363431316563626365303366373233366338636238656463643935653038
+          3432323437316433310a303432363866343563306130626134666162386163383331383038636536
+          61653233303733333866623061663037306530383465303433303631393561306566653665386132
+          6531646533373132646162663661663739613835663263633765
+
+### DNS resolution parameters
+
+dns_forwarders:
+  - 94.140.14.14
+  - 94.140.15.15
+allowed_networks:
+  - 192.168.42.0/24
+  - 127.0.0.0/8
+  - 172.17.0.0/16
+
+top_level_domain: .net
+domain_name: dystopia
+mail_subdomain: mail
+domain_database: db.main
+
+### Prometheus and its exporters' ports
+
+prometheus_port: 9090
+prometheus_exporters:
+  
+  node:
+    port: 9100
+
+  nginx:
+    port: 9113
+
+  mysql:
+    port: 9104
+
+  bind:
+    port: 9119
+
+### Docker parameteres
+
+docker_grafana_port: 3001
+docker_agama_port: 8000
+haproxy_port: 88
+docker_haproxy_exporter_port: 9101
+keepalived_exporter_port: 9165
+agama_container_per_vm: 1
+
+### Keepalived parameters
+
+keepalived_weight: 20
+keepalived_master_priority: 110
+keepalived_slave_priority: 100
+
+### Keepalived network configuration parameters
+
+local_network: 192.168.100.0/24
+network_prefix: 192.168.100
+
+### DNS keys for master and slaves
+
+dns_transfer_key_name: transfer.key
+dns_transfer_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38343030616664303238303265666363653533393334626231303339303338313866353335396635
+          3339336334613864303163393538376336393032623063320a396430333663333466313038326437
+          31383336306136633664306537386336333461373464626631353634313934336166333164336334
+          3733646330303662380a366662343366613032636564356138616161336632323039626634326430
+          65623036303334373939376162343864333365623636366332633062323962633637316464653832
+          3964626332626639613664336264653330613533303033393039
+
+
+
+
+
+dns_update_key_name: nsupdate.key
+dns_update_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32373062306566353330623666373963623832383662636165333238333735333463633637373663
+          3533316164386632643664306136353231626662353239370a646262653264336264353038613062
+          66666334353135386135343462323134363932663761313961613638656166653433346630343134
+          3165643233356633350a663035356233626362346365343661366162333432383032643337343866
+          61653261336230646230313336623130313064343761356164653931303531303438643733666263
+          6134363664386564373438386462386434306332326430336563
+
+### DNS zone network configuration parameters
+
+a_records:
+  - subdomain: backup
+    ip: 192.168.42.156
+
+dns_cnames:
+  - cname: influxdb
+    real: "{{ groups['influxdb'][0] }}"
+  - cname: prometheus
+    real: "{{ groups['prometheus'][0] }}"
+
+###Frontend links to the systems
+
+service_sources:
+
+  - service: Grafana
+    source: "{{ ansible_host }}:{{ hostvars['vm3']['ansible_port'] // 100 }}80/grafana"
+
+  - service: Prometheus
+    source: "{{ ansible_host }}:{{ hostvars['vm3']['ansible_port'] // 100 }}80/prometheus"
+
+  - service: Agama_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/"
+
+  - service: Agama_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/"
+
+  - service: Agama_HA
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}88/"
+
+  - service: Node_exporter_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/metrics"
+
+  - service: Node_exporter_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/metrics"
+
+  - service: Node_exporter_VM3
+    source: "{{ ansible_host }}:{{ hostvars['vm3']['ansible_port'] // 100 }}80/metrics"
+
+  - service: Nginx_exporter_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/nginx-metrics"
+
+  - service: Nginx_exporter_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/nginx-metrics"
+
+  - service: Nginx_exporter_VM3
+    source: "{{ ansible_host }}:{{ hostvars['vm3']['ansible_port'] // 100 }}80/nginx-metrics"
+
+  - service: Bind_exporter_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/bind-metrics"
+
+  - service: Bind_exporter_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/bind-metrics"
+
+  - service: Bind_exporter_VM3
+    source: "{{ ansible_host }}:{{ hostvars['vm3']['ansible_port'] // 100 }}80/bind-metrics"
+
+  - service: MySQL_exporter_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/mysql-metrics"
+
+  - service: MySQL_exporter_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/mysql-metrics"
+
+  - service: HAProxy_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/haproxy"
+
+  - service: HAProxy_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/haproxy"
+
+  - service: HAProxy_exporter_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/haproxy-metrics"
+
+  - service: HAProxy_exporter_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/haproxy-metrics"
+
+  - service: Keepalived_exporter_VM1
+    source: "{{ ansible_host }}:{{ hostvars['vm1']['ansible_port'] // 100 }}80/keepalived-metrics"
+
+  - service: Keepalived_exporter_VM2
+    source: "{{ ansible_host }}:{{ hostvars['vm2']['ansible_port'] // 100 }}80/keepalived-metrics"
