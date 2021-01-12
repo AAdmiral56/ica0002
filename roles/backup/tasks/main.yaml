@@ -36,6 +36,11 @@
   no_log: true
   when: inventory_hostname == groups['db_masters'][0]
 
+- name: Creates directory
+  file:
+    path: /home/backup/
+    state: directory
+    
 - name: Copy MySQL configuration file
   template:
     src: backup.my.cnf.j2
