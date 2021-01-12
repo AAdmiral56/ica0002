@@ -22,7 +22,7 @@
 #    owner: root
 #    group: root
 #    mode: '777'
-
+ # network_mode: host
 - name: Build Agama Docker image
   docker_image:
     name: agama
@@ -36,7 +36,6 @@
   docker_container:
     name: agama
     image: agama
-    network_mode: host
     env:
       AGAMA_DATABASE_URI: "mysql://{{ mysql_user }}:{{ mysql_password }}@{{ vm1_ip }}/{{ mysql_database }}"
     ports:
