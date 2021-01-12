@@ -1,0 +1,34 @@
+- name: Setup Agama Docker container
+  hosts: app_servers
+  gather_facts: false
+  become: yes
+  roles:
+    - agama_docker
+  tags: agama
+
+#Application instances
+- name: Setup HAProxy and containerised HAProxy Prometheus exporter
+  hosts: haproxy
+  gather_facts: false
+  become: yes
+  roles:
+    - haproxy
+  tags: haproxy
+
+#Application instances
+- name: Setup keepalived and keepalived Prometheus exporter
+  hosts: haproxy
+  gather_facts: false
+  become: yes
+  roles:
+    - keepalived
+  tags: keepalived
+
+#All
+- name: Setup backup facilities and upload of backups
+  hosts: all
+  gather_facts: false
+  become: yes
+  roles:
+    - backup
+  tags: backup
