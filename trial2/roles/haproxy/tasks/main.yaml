@@ -12,7 +12,7 @@
 - name: Start service HAProxy, if not started
   service:
     name: haproxy
-    state: restarted
+    state: started
     enabled: yes
 
 - name: Setup HAProxy exporter on VM1
@@ -38,5 +38,5 @@
 - name: Start service HAProxy, if not started
   service:
     name: haproxy
-    state: restarted
+    state: started
     enabled: yes
