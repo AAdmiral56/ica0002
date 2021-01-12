@@ -10,18 +10,18 @@
     dest: /etc/haproxy/haproxy.cfg
   notify: Restart HAProxy
 
-#- name: Install HAProxy exporter
-#  apt:
-#    name: haproxy_exporter
-#    state: latest
+- name: Install HAProxy exporter
+  apt:
+    name: haproxy_exporter
+    state: latest
 
-- name: HAProxy Exporter
+- name: Setup HAProxy exporter on VMs
   docker_container:
     name: haproxy_exporter
     image: quay.io/prometheus/haproxy-exporter:v0.9.0
     ports:
-      - "9101:9101"
-    command: --haproxy.scrape-uri="http://{{ inventory_hostname }}:88/haproxy?stats;csv"
+      - "{{ docker_haproxy_exporter_port }}:9101"
+    command: --haproxy.scrape-uri="http://{{ inventory_hostname }}:{{ haproxy_port }}/haproxy?stats;csv"
     restart_policy: always
 
 - name: start HAProxy
