@@ -36,5 +36,5 @@
 - name: Check if the service is started and if it is not, start it
   service:
     name: haproxy
-    state: started
+    state: restarted
     enabled: yes
