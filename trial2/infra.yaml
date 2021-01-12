@@ -144,7 +144,6 @@
 
  - name: Install HAProxy
    hosts: haproxy
-   gather_facts: no
    become: yes
    roles:
      - haproxy
@@ -154,7 +153,6 @@
 
  - name: Install keepalived
    hosts: haproxy
-   gather_facts: no
    become: yes
    roles:
      - keepalived
