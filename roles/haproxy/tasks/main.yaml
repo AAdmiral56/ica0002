@@ -10,10 +10,11 @@
     dest: /etc/haproxy/haproxy.cfg
   notify: Restart HAProxy
 
-- name: Install HAProxy exporter
-  apt:
-    name: haproxy_exporter
-    state: latest
+- name: start HAProxy
+  service:
+    name: haproxy
+    state: started
+    enabled: yes
 
 - name: Setup HAProxy exporter on VMs
   docker_container:
