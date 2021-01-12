@@ -8,8 +8,12 @@
   template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
-  notify: Restart HAProxy
 
+- name: Start service HAProxy, if not started
+  service:
+    name: haproxy
+    state: restarted
+    enabled: yes
 
 - name: Setup HAProxy exporter on VM1
   docker_container:
@@ -34,5 +38,5 @@
 - name: Start service HAProxy, if not started
   service:
     name: haproxy
-    state: started
+    state: restarted
     enabled: yes
