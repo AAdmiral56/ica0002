@@ -1,142 +1,48 @@
----
-- name: Setup
-  hosts: all
-  become: yes
-  roles:
-    - init
+ - name: Install docker
+   hosts: docker
+   gather_facts: false
+   become: yes
+   roles:
+     - docker
+   tags:
+     - docker
+
+ - name: Setup Grafana Docker container
+   hosts: grafana
+   gather_facts: no
+   become: yes
+   roles:
+     - grafana
+     - grafana_docker
+   tags:
+     - grafana_docker
 
 
-- name: DNS servers
-  hosts: dns_server
-  become: yes
-  roles:
-    - bind
-    
-- name: Setup for Application VMs
-  hosts: haproxy
-  become: yes
-  roles:
-    - users
-    - mysql
-    
-#- name: DNS servers
- # hosts: dns_server
-  #become: yes
-  #roles:
-  #  - bind
-  #vars_files:
-  #  - vault1.yml
+ - name: Setup Agama Docker container
+   hosts: app_servers
+   gather_facts: no
+   become: yes
+   roles:
+     - agama_docker
+   tags:
+     - agama_docker
 
-- name: Resolver
-  hosts: all
-  become: yes
-  roles:
-    - resolv
 
-- name: Node Exporter
-  hosts: all
-  become: yes
-  roles:
-    - node_exporter
+ - name: Install HAProxy
+   hosts: haproxy
+   gather_facts: no
+   become: yes
+   roles:
+     - haproxy
+   tags:
+     - haproxy
 
-- name: Prometheus
-  hosts: prometheus
-  become: yes
-  roles:
-    - prometheus
 
-- name: DNS
-  hosts: dns_server
-  become: yes
-  gather_facts: no
-  roles:
-    - bind_exporter
-
-- name: Nginx Exporter
-  hosts: haproxy
-  become: yes
-  gather_facts: no
-  roles:
-    - nginx_exporter
-
-- name: Prometheus
-  hosts: prometheus
-  become: yes
-  gather_facts: yes
-  roles:
-    - prometheus
-    
-- name: Node Exporter
-  hosts: all
-  become: yes
-  gather_facts: no
-  roles:
-    - node_exporter
-
-- name: InfluxDB
-  hosts: influxdb
-  become: yes
-  gather_facts: no
-  roles:
-    - influxdb
-
-- name: Rsyslog
-  hosts: all
-  become: yes
-  gather_facts: no
-  roles:
-    - rsyslog
-
-- name: pinger
-  hosts: influxdb
-  become: yes
-  gather_facts: no
-  roles:
-    - pinger
-
-- name: Docker
-  become: yes
-  gather_facts: yes
-  hosts: all
-  roles:
-    - docker
-
-- name: Grafana Docker
-  hosts: grafana
-  become: yes
-  roles:
-    - grafana_docker
-
-- name: Agama Docker
-  hosts: haproxy
-  become: yes
-  roles:
-    - agama_docker
-
-- name: Creation of backup user
-  hosts: all
-  become: yes
-  gather_facts: no
-  roles:
-    - backup
-
-- name: HAProxy
-  hosts: haproxy
-  become: yes
-  gather_facts: yes
-  roles:
-    - haproxy
-
-- name: keepalived
-  hosts: haproxy
-  become: yes
-  gather_facts: no
-  roles:
-    - keepalived
-
-- name: Database server
-  hosts: db_servers
-  become: yes
-  gather_facts: no
-  roles:
-    - mysql_exporter
+ - name: Install keepalived
+   hosts: haproxy
+   gather_facts: no
+   become: yes
+   roles:
+     - keepalived
+   tags:
+     - keepalived
