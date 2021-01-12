@@ -113,7 +113,7 @@
 
 
  - name: Install docker
-   hosts: docker
+   hosts: all
    gather_facts: false
    become: yes
    roles:
