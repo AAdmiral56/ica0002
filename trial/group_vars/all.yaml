@@ -52,7 +52,7 @@ github_token: !vault |
           6461343236633866633338336537313863363963333064316439
 
 ### DNS resolution parameters
-
+vm1_ip: {{ hostvars['vm1']['ansible_default_ipv4'] }}
 dns_forwarders:
   - 94.140.14.14
   - 94.140.15.15
