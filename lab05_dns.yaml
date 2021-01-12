@@ -1,17 +1,17 @@
 ---
-- name: Collect information about all VMs
-  hosts: all
-  tasks:
-    - setup:
+- name: He who fails to prepare prepares to fail
+  import_playbook: headstart.yaml
 
-- name: DNS servers
+- name: DNS server
   hosts: dns_servers
+  gather_facts: false
   become: yes
   roles:
     - bind
 
-- name: Change resolv.conf
-  hosts: all
+- name: DNS configuration
+  hosts: dns_config
+  gather_facts: false
   become: yes
   roles:
-    - resolv
+    - dns_config

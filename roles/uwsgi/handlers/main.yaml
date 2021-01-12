@@ -1,5 +1,6 @@
-- name: restart uwsgi
-  service: 
+---
+- name: Restart uWSGI
+  service:
     name: uwsgi
     state: restarted
-  become: yes
+    enabled: yes

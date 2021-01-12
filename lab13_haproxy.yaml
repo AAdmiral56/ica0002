@@ -1,41 +1,59 @@
 ---
-- name: DNS
-  hosts: dns_server
+- name: He who fails to prepare prepares to fail
+  import_playbook: headstart.yaml
+
+- name: Update Nginx configuration
+  hosts: web_servers
+  gather_facts: false
   become: yes
-  gather_facts: yes
+  roles:
+    - nginx
+
+- name: Update DNS configuration
+  hosts: dns_servers
+  gather_facts: false
+  become: yes
   roles:
     - bind
-    - bind_exporter
 
-# - name: Prometheus
-#   hosts: prometheus
-#   become: yes
-#   gather_facts: no
-#   roles:
-#     - prometheus
-
-- name: Reverse proxy
+- name: Update backup facility configuration
   hosts: all
+  gather_facts: false
   become: yes
-  gather_facts: yes
   roles:
-    - reverse_proxy
-    - resolv
+    - backup
 
-- name: HAProxy
-  hosts: haproxy
+- name: Install docker
+  hosts: docker
+  gather_facts: false
   become: yes
-  gather_facts: yes
+  roles:
+    - docker
+
+- name: Reconfigure Prometheus
+  hosts: prometheus
+  gather_facts: false
+  become: yes
+  roles:
+    - prometheus
+
+- name: Setup Agama Docker container
+  hosts: app_servers
+  gather_facts: false
+  become: yes
+  roles:
+    - agama_docker
+
+- name: Install HAProxy and containerised haproxy exporter
+  hosts: haproxy
+  gather_facts: false
+  become: yes
   roles:
     - haproxy
-  tags:
-    - ha
 
-- name: keepalived
+- name: Install keepalived and keepalived exporter
   hosts: haproxy
+  gather_facts: false
   become: yes
-  gather_facts: no
   roles:
-    - keepalived
-  tags:
     - keepalived

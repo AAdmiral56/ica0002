@@ -1,18 +1,24 @@
 ---
-- name: Install Node Exporters
-  hosts: all
-  become: yes
-  roles:
-    - node_exporters
+- name: He who fails to prepare prepares to fail
+  import_playbook: headstart.yaml
 
-- name: Install and configure Prometheus
+- name: Prometheus
   hosts: prometheus
+  gather_facts: false
   become: yes
   roles:
     - prometheus
 
-- name: Configure reverse proxy
-  hosts: all
+- name: Node exporters
+  hosts: node_exporters
+  gather_facts: false
   become: yes
   roles:
-    - reverse_proxy
+    - node_exporters
+
+- name: Install and configure non-Prometheus VM's Nginx
+  hosts: vm2
+  gather_facts: false
+  become: yes
+  roles:
+    - nginx

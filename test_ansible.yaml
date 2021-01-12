@@ -1,6 +1,5 @@
 ---
-- name: Ansible connection test
-  hosts: all
-  gather_facts: no
-  roles:
-    - test_connection
+  - name: Ansible connection test
+    hosts: all
+    roles:
+      - test_connection
