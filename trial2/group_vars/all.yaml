@@ -48,10 +48,10 @@ allowed_networks:
 localhost_address: 127.0.0.1
 local_network: 192.168.42.0/24
 localhost: 127.0.0.0/8
-vm1_ip: 192.168.42.91
-vm2_ip: 192.168.42.55
+vm1_ip: 192.168.42.13
+vm2_ip: 192.168.42.30
 backup_ip: 192.168.42.156
-vm1_port_number: 9122
+vm1_port_number: 1322
 
 domain: cloud.ns
 startup_name: cloud
@@ -105,13 +105,13 @@ docker_haproxy_exporter_port: 9101
 dns_record:
    - name: vm1
      type: A
-     ip: 192.168.42.91
+     ip: 192.168.42.13
    - name: vm2
      type: A
-     ip: 192.168.42.55
+     ip: 192.168.42.30
    - name: vm3
      type: A
-     ip: 192.168.42.40
+     ip: 192.168.42.79
 
 
 
