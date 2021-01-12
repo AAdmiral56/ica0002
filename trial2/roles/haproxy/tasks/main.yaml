@@ -31,8 +31,4 @@
     restart_policy: always
   when: inventory_hostname == "vm2"
 
-- name: Start service HAProxy, if not started
-  service:
-    name: haproxy
-    state: started
-    enabled: yes
+
