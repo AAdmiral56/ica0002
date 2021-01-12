@@ -4,7 +4,7 @@
     name: prometheus
     state: latest
 
-# Old reconfiguration method is deprecated since the 11th lab in favour of templating to achieve idempotency and avoid unnecessary Prometheus restarts
+# Old config
 
 #- name: Duplicate Prometheus' service configration
 #  copy:
