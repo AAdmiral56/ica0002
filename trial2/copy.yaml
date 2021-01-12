@@ -1,6 +1,17 @@
+---
+ - name: Collect information about all VMs
+   hosts: all
+   tasks:
+     - setup:
+
+ - name: Setup
+   hosts: all
+   become: yes
+   roles:
+     - init
+     
  - name: Install HAProxy
    hosts: haproxy
-   gather_facts: no
    become: yes
    roles:
      - haproxy
@@ -10,7 +21,6 @@
 
  - name: Install keepalived
    hosts: haproxy
-   gather_facts: no
    become: yes
    roles:
      - keepalived
