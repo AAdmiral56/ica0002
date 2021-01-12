@@ -37,7 +37,7 @@ defaults
         errorfile 504 /etc/haproxy/errors/504.http
 
 listen haproxy_node
-	bind :{{ haproxy_port }}
+	bind :88
 	stats enable
 	stats uri /haproxy?stats
 {% for vm in groups['haproxy'] %}
