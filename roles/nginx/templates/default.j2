@@ -9,7 +9,7 @@ server {
 	listen 8080 default_server;
         listen [::]:8080 default_server;
 
-	server_name _;
+	server_name adattiva.xyz;
 
 	{% if inventory_hostname in groups['internal'] %}
         #Updated index.html for the Nginx on the management system
