@@ -22,8 +22,8 @@ vm1
 vm2
 
 [db_servers]
-vm1 mysql_server_id=50
-vm2 mysql_server_id=25
+vm2 mysql_server_id=50
+vm1 mysql_server_id=25
 
 [db_servers:children]
 db_replicas
