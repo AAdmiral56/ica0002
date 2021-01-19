@@ -62,7 +62,7 @@ allowed_networks:
 top_level_domain: .xyz
 domain_name: adattiva
 mail_subdomain: mail
-domain_database: db.main
+domain_database: db.adattiva.xyz
 prometheus_port: 9090
 prometheus_exporters:
   
