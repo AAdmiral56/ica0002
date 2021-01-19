@@ -44,8 +44,8 @@
     state: started
     enabled: yes
     
-- name: Turn off haproxy exporter
-  shell: docker stop haproxy_exporter
+#- name: Turn off haproxy exporter
+ # shell: docker stop haproxy_exporter
   
-- name: Turn off haproxy exporter
-  shell: docker start haproxy_exporter
+#- name: Turn off haproxy exporter
+ # shell: docker start haproxy_exporter

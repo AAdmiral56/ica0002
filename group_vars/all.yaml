@@ -1,5 +1,5 @@
 
-
+mysql_host: groups['db_masters'][0]
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
