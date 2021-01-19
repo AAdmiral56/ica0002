@@ -7,3 +7,7 @@
     name: prometheus-mysqld-exporter
     state: restarted
     enabled: yes
+
+- name: Systemctl daemon-reload
+  shell: "systemctl daemon-reload"
+

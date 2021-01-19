@@ -33,7 +33,9 @@
     owner: prometheus
     group: prometheus
     mode: '0400'
-  notify: Restart MySQL exporter
+  notify:
+    - Systemctl daemon-reload 
+    - Restart MySQL exporter
 
 # Before starting the service - run handlers
 
