@@ -1,6 +1,6 @@
-vm1 ansible_host=193.40.156.86 ansible_port=1922 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
-vm2 ansible_host=193.40.156.86 ansible_port=1722 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
-vm3 ansible_host=193.40.156.86 ansible_port=5222 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm1 ansible_host=193.40.156.86 ansible_port=2622 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm2 ansible_host=193.40.156.86 ansible_port=2722 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm3 ansible_host=193.40.156.86 ansible_port=4622 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
 
 [internal]
@@ -20,6 +20,10 @@ vm1
 
 [db_masters]
 vm2
+
+[db_servers]
+vm1 mysql_server_id=50
+vm2 mysql_server_id=25
 
 [db_servers:children]
 db_replicas
