@@ -1,5 +1,5 @@
 
-mysql_host: groups['db_masters'][0]
+mysql_host: 192.168.42.27
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
